@@ -49,7 +49,7 @@ class GearWishlistNotifier extends AsyncNotifier<List<GearWishlistModel>> {
   }
 
   /// Update a wishlist item and refresh the list.
-  Future<void> update({
+  Future<void> updateItem({
     required int id,
     required Map<String, dynamic> data,
   }) async {

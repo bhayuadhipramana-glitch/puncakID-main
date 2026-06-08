@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:puncak_id_flutter/core/constants/app_constants.dart';
+import 'package:puncak_id/core/constants/app_constants.dart';
 
 /// AppTheme - Mengonversi Design DNA "Atmospheric Ascent" ke ThemeData Flutter
 class AppTheme {
@@ -22,7 +22,7 @@ class AppTheme {
       ),
 
       // Implementasi Aturan "No-Line" pada Elemen Card
-      cardTheme: const CardTheme(
+      cardTheme: const CardThemeData(
         color: AppColors.surfaceContainer,
         elevation: 0,
         shape: RoundedRectangleBorder(

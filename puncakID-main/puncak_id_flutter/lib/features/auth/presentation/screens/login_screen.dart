@@ -21,14 +21,11 @@ import '../../../../shared/widgets/atmospheric_text_field.dart';
 // ── Design DNA Color Tokens (from Stitch "Atmospheric Ascent") ──
 const Color _midnightSky = Color(0xFF0B1326);
 const Color _surfaceContainer = Color(0xFF171F33);
-const Color _surfaceContainerHighest = Color(0xFF2D3449);
-const Color _surfaceBright = Color(0xFF31394D);
 const Color _primaryContainer = Color(0xFF1B4D3E);
 const Color _emeraldCanopy = Color(0xFF2D7D5F);
 const Color _emerald400 = Color(0xFF34D399);
 const Color _emerald500 = Color(0xFF10B981);
 const Color _sunsetAmber = Color(0xFFF59E0B);
-const Color _amberGlow = Color(0xFFFFB95F);
 const Color _onSurface = Color(0xFFDAE2FD);
 const Color _onSurfaceVariant = Color(0xFFC0C9C3);
 const Color _outline = Color(0xFF8A938E);

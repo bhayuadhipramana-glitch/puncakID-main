@@ -28,14 +28,14 @@ const Color _onSurfaceVariant = Color(0xFFC0C9C3);
 const Color _outline = Color(0xFF8A938E);
 const Color _secondary = Color(0xFF88D6B3);
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -257,48 +257,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 _buildConfirmPasswordField(),
                 const SizedBox(height: 32),
 
-                AtmosphericButton(
-                  label: 'Create Account / Daftar',
-                  icon: Icons.east_rounded,
-                  isLoading: _isLoading,
-                  onPressed: _handleSignup,
-                ),
-
-                const SizedBox(height: 32),
-                Container(
-                  padding: const EdgeInsets.only(top: 24),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color(0x0DFFFFFF),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already have an account? ",
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          color: _onSurfaceVariant,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => context.goNamed(RouteNames.login),
-                        child: Text(
-                          'Login',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: _secondary,
-                            decoration: TextDecoration.none,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildSubmitButton(),
+                const SizedBox(height: 16),
+                _buildLoginLink(),
               ],
             ),
           ),
@@ -308,16 +269,13 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget _buildFieldLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 2),
-      child: Text(
-        text,
-        style: GoogleFonts.inter(
-          fontSize: 10,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 2.5,
-          color: _onSurfaceVariant,
-        ),
+    return Text(
+      text,
+      style: GoogleFonts.inter(
+        fontSize: 10,
+        fontWeight: FontWeight.w600,
+        color: _emerald400,
+        letterSpacing: 1.5,
       ),
     );
   }
@@ -326,10 +284,11 @@ class _SignupScreenState extends State<SignupScreen> {
     return AtmosphericTextField(
       controller: _nameController,
       hintText: 'John Doe',
-      prefixIcon: Icons.person_outline_rounded,
-      keyboardType: TextInputType.name,
+      prefixIcon: Icons.person_outline,
       validator: (value) {
-        if (value == null || value.isEmpty) return 'Name is required';
+        if (value == null || value.trim().isEmpty) {
+          return 'Please enter your name';
+        }
         return null;
       },
     );
@@ -338,12 +297,16 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildEmailField() {
     return AtmosphericTextField(
       controller: _emailController,
-      hintText: 'name@summit.id',
-      prefixIcon: Icons.mail_outlined,
+      hintText: 'yours@example.com',
+      prefixIcon: Icons.email_outlined,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
-        if (value == null || value.isEmpty) return 'Email is required';
-        if (!value.contains('@')) return 'Enter a valid email';
+        if (value == null || value.trim().isEmpty) {
+          return 'Please enter your email';
+        }
+        if (!value.contains('@') || !value.contains('.')) {
+          return 'Please enter a valid email';
+        }
         return null;
       },
     );
@@ -353,23 +316,23 @@ class _SignupScreenState extends State<SignupScreen> {
     return AtmosphericTextField(
       controller: _passwordController,
       hintText: '••••••••',
-      prefixIcon: Icons.lock_outline_rounded,
+      prefixIcon: Icons.lock_outline,
       obscureText: _obscurePassword,
       suffixIcon: IconButton(
         icon: Icon(
-          _obscurePassword
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined,
-          color: _outline,
-          size: 20,
+          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          color: _onSurfaceVariant,
         ),
         onPressed: () {
-          setState(() => _obscurePassword = !_obscurePassword);
+          setState(() {
+            _obscurePassword = !_obscurePassword;
+          });
         },
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) return 'Password is required';
-        if (value.length < 6) return 'Minimum 6 characters';
+        if (value == null || value.length < 6) {
+          return 'Password must be at least 6 characters';
+        }
         return null;
       },
     );
@@ -379,25 +342,62 @@ class _SignupScreenState extends State<SignupScreen> {
     return AtmosphericTextField(
       controller: _confirmPasswordController,
       hintText: '••••••••',
-      prefixIcon: Icons.lock_outline_rounded,
+      prefixIcon: Icons.lock_outline,
       obscureText: _obscureConfirmPassword,
       suffixIcon: IconButton(
         icon: Icon(
-          _obscureConfirmPassword
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined,
-          color: _outline,
-          size: 20,
+          _obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          color: _onSurfaceVariant,
         ),
         onPressed: () {
-          setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+          setState(() {
+            _obscureConfirmPassword = !_obscureConfirmPassword;
+          });
         },
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) return 'Confirm password is required';
-        if (value != _passwordController.text) return 'Passwords do not match';
+        if (value != _passwordController.text) {
+          return 'Passwords do not match';
+        }
         return null;
       },
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return AtmosphericButton(
+      label: 'Create Account',
+      isLoading: _isLoading,
+      onPressed: _handleSignup,
+    );
+  }
+
+  Widget _buildLoginLink() {
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          // Go to login screen
+          context.pop();
+        },
+        child: RichText(
+          text: TextSpan(
+            text: 'Already have an account? ',
+            style: GoogleFonts.inter(
+              color: _onSurfaceVariant,
+              fontSize: 14,
+            ),
+            children: [
+              TextSpan(
+                text: 'Log in',
+                style: GoogleFonts.inter(
+                  color: _emerald400,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -406,21 +406,26 @@ class _MountainSilhouettePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = _emeraldCanopy
+      ..color = _emerald400
       ..style = PaintingStyle.fill;
 
-    final w = size.width;
-    final h = size.height;
-
-    final path = Path()
-      ..moveTo(0, h)
-      ..lineTo(w * 0.167, h * 0.333)
-      ..lineTo(w * 0.333, h * 0.667)
-      ..lineTo(w * 0.500, h * 0.167)
-      ..lineTo(w * 0.667, h * 0.600)
-      ..lineTo(w * 0.833, h * 0.267)
-      ..lineTo(w, h)
-      ..close();
+    final path = Path();
+    path.moveTo(0, size.height);
+    path.lineTo(0, size.height * 0.5);
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.3,
+      size.width * 0.5,
+      size.height * 0.6,
+    );
+    path.quadraticBezierTo(
+      size.width * 0.75,
+      size.height * 0.8,
+      size.width,
+      size.height * 0.4,
+    );
+    path.lineTo(size.width, size.height);
+    path.close();
 
     canvas.drawPath(path, paint);
   }

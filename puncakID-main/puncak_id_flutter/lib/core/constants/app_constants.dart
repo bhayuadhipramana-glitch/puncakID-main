@@ -19,7 +19,7 @@ class AppConstants {
   static const String kAppTagline = 'Elevate Your Journey';
   static const String kAppDescription =
       'Join the elite community of high-altitude explorers and track your '
-      'ascent to the world's most breathtaking summits.';
+      "ascent to the world's most breathtaking summits.";
 
   // ── Brand Colors (from Tailwind config) ───────────────────
   static const Color kEmerald500 = Color(0xFF10B981);
@@ -91,4 +91,24 @@ class AppConstants {
     'saving',
     'collected',
   ];
+}
+
+class AppColors {
+  static const Color midnightSky = AppConstants.kSlate950;
+  static const Color forestGreen = AppConstants.kEmerald600;
+  static const Color emeraldCanopy = AppConstants.kEmerald400;
+  static const Color sunsetAmber = AppConstants.kAmber500;
+  static const Color surfaceContainer = AppConstants.kSlate900;
+  static const Color surfaceContainerLow = AppConstants.kSlate800;
+  static const Color textPrimary = AppConstants.kWhite;
+  static const Color textSecondary = AppConstants.kSlate400;
+}
+
+class AppRadiuses {
+  static const double sm = AppConstants.kRadiusSm;
+  static const double md = AppConstants.kRadiusMd;
+  static const double lg = AppConstants.kRadiusLg;
+  static const double xl = AppConstants.kRadiusXl;
+  static const double xxl = AppConstants.kRadius2Xl;
+  static const double full = AppConstants.kRadiusFull;
 }
